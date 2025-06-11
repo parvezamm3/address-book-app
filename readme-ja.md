@@ -34,7 +34,7 @@ Windows マシンに以下がインストールされていることを確認し
 Git を使用する場合:
 
 ```sh
-git clone <your-repository-url>
+git clone https://github.com/parvezamm3/address-book-app.git
 cd address-book-app
 ```
 

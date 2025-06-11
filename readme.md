@@ -33,7 +33,7 @@ Follow these steps to run the application locally.
 If using Git:
 
 ```sh
-git clone <your-repository-url>
+git clone https://github.com/parvezamm3/address-book-app.git
 cd address-book-app
 ```
 
