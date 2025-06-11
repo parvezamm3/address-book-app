@@ -1,0 +1,44 @@
+# Python / Flask
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.vscode/ # Optional: if you don't want VS Code workspace settings versioned
+
+# SQLite database files
+backend/instance/*.db
+backend/instance/*.db-journal
+
+# React / Node.js
+node_modules/
+build/
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS specific files
+.DS_Store # macOS
+Thumbs.db # Windows
+desktop.ini # Windows
+
+# Logs
+*.log
+
+# Editor-specific files
+.idea/ # IntelliJ/PyCharm
+.vscode/ # Visual Studio Code settings
+*.sublime-project
+*.sublime-workspace
+
+# VSC specific files (if you want to ignore user-specific settings)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/
