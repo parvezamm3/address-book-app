@@ -151,6 +151,24 @@ tr:hover {
   background-color: #f1f1f1;
 }
 
+.edit-button {
+  background-color: #ffc107; /* Yellowish color for edit */
+  color: #333; /* Darker text for contrast */
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.3s ease;
+  margin-right: 8px; /* Space between edit and delete buttons */
+  text-decoration: none; /* Remove underline from Link component */
+  display: inline-block; /* Ensure padding and margin work */
+}
+
+.edit-button:hover {
+  background-color: #e0a800; /* Darker yellow on hover */
+}
+
 .delete-button {
   background-color: #dc3545;
   color: white;

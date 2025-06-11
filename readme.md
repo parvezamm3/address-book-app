@@ -109,7 +109,6 @@ npm start
 
 The React app opens at [http://localhost:3000/](http://localhost:3000/).
 
-## Using the Application
 
 - **Homepage (`/`)**: Displays all saved addresses in a table.
 - **Create New Address**: Click the button to go to the creation form (`/create`).

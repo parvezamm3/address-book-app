@@ -75,7 +75,7 @@ function HomePage() {
               <th>Phone</th>
               <th>Email</th>
               <th>Added At</th>
-              <th>Actions</th> {/* Column for delete button */}
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -86,11 +86,12 @@ function HomePage() {
                 <td>{address.prefecture}</td>
                 <td>{address.city}</td>
                 <td>{address.street}</td>
-                <td>{address.apartment || '-'}</td> {/* Display '-' if apartment is null */}
+                <td>{address.apartment || '-'}</td>
                 <td>{address.phone}</td>
                 <td>{address.email}</td>
                 <td>{new Date(address.created_at).toLocaleString()}</td>
                 <td>
+                  <Link to={`/edit/${address.id}`} className="edit-button">Edit</Link>
                   <button onClick={() => handleDelete(address.id)} className="delete-button">Delete</button>
                 </td>
               </tr>
