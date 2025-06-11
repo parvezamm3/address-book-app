@@ -1,0 +1,178 @@
+/* Add to your existing frontend/src/App.css */
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+  margin: 20px;
+}
+
+h1 {
+  color: #333;
+}
+
+nav {
+  margin-bottom: 20px;
+}
+
+.nav-button {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  margin: 5px; /* Add some spacing */
+}
+
+.nav-button:hover {
+  background-color: #0056b3;
+}
+
+/* Page container styles */
+.home-page {
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    max-width: 80%;
+    margin: 20px auto;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Page container styles */
+.create-address-page {
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Form styling (can be shared or specific) */
+form {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  display: inline-block; /* Helps center the form */
+  text-align: left;
+  background-color: #f9f9f9;
+}
+
+form div {
+  margin-bottom: 10px;
+}
+
+label {
+  display: inline-block;
+  width: 100px; /* Adjust label width as needed */
+  text-align: right;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"] {
+  padding: 8px;
+  width: 250px; /* Adjust input width */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button[type="submit"] {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 15px;
+}
+
+button[type="submit"]:hover {
+  background-color: #218838;
+}
+
+/* List styling */
+ul {
+  list-style: none;
+  padding: 0;
+  max-width: 600px;
+  margin: 20px auto;
+  text-align: left;
+}
+
+li {
+  background-color: #f0f8ff; /* Light blue background for list items */
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  align-items: flex-start; /* Align text to the left */
+  position: relative;
+  border: 1px solid #e0e0e0;
+}
+
+li strong {
+    font-size: 1.1em;
+    color: #0056b3;
+}
+
+li small {
+    color: #666;
+    margin-top: 5px;
+}
+
+table {
+  width: 90%; /* Adjust width as needed */
+  margin: 20px auto;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}
+
+.delete-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 0.9em;
+  top: 10px;
+  right: 10px;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+.message {
+    color: green;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.message.error {
+    color: red;
+}
