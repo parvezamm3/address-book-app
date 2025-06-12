@@ -100,14 +100,7 @@ npm install
 #### b. Start the React Development Server
 
 ```sh
-npm start
+npm run dev
 ```
 
 The React app opens at [http://localhost:3000/](http://localhost:3000/).
-
-
-- **Homepage (`/`)**: Displays all saved addresses in a table.
-- **Create New Address**: Click the button to go to the creation form (`/create`).
-- **Create Address Page (`/create`)**: Fill out the form and submit. You’ll be redirected to the homepage, and the new address will appear.
-- **Edit Button**: Each address in the table has an "Edit" button. Click it to go to a form pre-filled with that address's details, allowing you to modify them. Upon successful update, you will be redirected back to the Homepage.
-- **Delete Button**: Each address row has a "Delete" button to remove it from the database.
