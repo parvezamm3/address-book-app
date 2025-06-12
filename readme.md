@@ -1,116 +1,111 @@
-# Address Book Application
+# アドレス帳アプリケーション
 
-A full-stack web application for managing addresses, built with a React frontend, Flask backend, and SQLite database.
+React フロントエンド、Flask バックエンド、SQLite データベースで構築された住所管理のためのフルスタック Web アプリケーションです。
 
-## Features
+## 機能
 
-- Add new addresses with detailed information (name, postcode, prefecture, city, street, apartment, phone, email)
-- View all saved addresses in a table format on the homepage
-- Delete existing addresses
-- Persistent storage using SQLite
+- 詳細情報（氏名、郵便番号、都道府県、市区町村、番地、アパート、電話、メール）付きの新しい住所の追加
+- ホームページで全ての保存済み住所をテーブル形式で表示
+- 既存住所の編集
+- 既存住所の削除
+- SQLite を使った永続的なデータ保存
 
-## Technologies Used
+## 使用技術
 
-- **Frontend:** React.js, React Router
-- **Backend:** Flask (Python), Flask-CORS
-- **Database:** SQLite3
-- **Package Managers:** npm (Node.js), pip (Python)
+- **フロントエンド:** React.js、Vite（開発・バンドル用）、React Router
+- **バックエンド:** Flask（Python）、Flask-CORS
+- **データベース:** SQLite3
+- **パッケージ管理:** npm（Node.js）、pip（Python）
 
-## Prerequisites
+## 前提条件
 
-Ensure you have the following installed on your Windows machine:
+Windows マシンに以下がインストールされていることを確認してください。
 
-- **Python 3.8+**: [Download from python.org](https://www.python.org/downloads/). (Check "Add Python to PATH" during installation)
-- **Node.js & npm**: [Download LTS from nodejs.org](https://nodejs.org/). (npm is included)
-- **(Recommended) Git**: [Download from git-scm.com](https://git-scm.com/)
+- **Python 3.10+**: [python.org からダウンロード](https://www.python.org/downloads/)（インストール時に「Add Python to PATH」にチェック）
+- **Node.js & npm**: [nodejs.org から LTS をダウンロード](https://nodejs.org/)（npm は同梱）
+- **（推奨）Git**: [git-scm.com からダウンロード](https://git-scm.com/)
 
-## Setup and Running the Application
+## セットアップとアプリケーションの実行
 
-Follow these steps to run the application locally.
+以下の手順でローカル環境にアプリケーションをセットアップします。
 
-### 1. Clone the Repository
-
-If using Git:
-
+### 1. リポジトリのクローン
 ```sh
 git clone https://github.com/parvezamm3/address-book-app.git
 cd address-book-app
 ```
+### 2. バックエンドのセットアップ（Flask & SQLite）
 
-If you have local files, navigate to the `address-book-app` root directory.
-
-### 2. Backend Setup (Flask & SQLite)
-
-Navigate to the backend directory:
+バックエンドディレクトリへ移動：
 
 ```sh
 cd backend
 ```
 
-#### a. Create and Activate a Python Virtual Environment
+#### a. Python 仮想環境の作成と有効化
 
 ```sh
 python -m venv venv
-.\venv\Scripts\activate  # On Windows PowerShell/CMD
+.\venv\Scripts\activate  # Windows PowerShell/CMD の場合
 ```
 
-#### b. Install Python Dependencies
+#### b. Python 依存パッケージのインストール
 
 ```sh
 pip install -r requirements.txt
 ```
 
-Ensure `requirements.txt` includes `Flask` and `Flask-CORS`.
+`requirements.txt` に `Flask` と `Flask-CORS` が含まれていることを確認してください。
 
-#### c. Initialize the Database
+#### c. データベースの初期化
 
 ```sh
 flask --app app init-db
 ```
 
-This creates `instance/addresses.db` and sets up the schema.
+これで `instance/addresses.db` が作成され、スキーマがセットアップされます。
 
-**Note:** If you change `backend/schema.sql`, re-initialize the database:
+**注意:** `backend/schema.sql` を変更した場合は、データベースを再初期化してください：
 
-1. Stop the Flask server (`Ctrl+C`)
-2. Delete `backend/instance/addresses.db`
-3. Run `flask --app app init-db` again
+1. Flask サーバーを停止（`Ctrl+C`）
+2. `backend/instance/addresses.db` を削除
+3. 再度 `flask --app app init-db` を実行
 
-Alternatively, use a SQLite GUI (e.g., "DB Browser for SQLite") to alter tables without losing data.
+または、SQLite GUI（例:「DB Browser for SQLite」）を使ってデータを失わずにテーブルを変更できます。
 
-#### d. Start the Flask Backend Server
+#### d. Flask バックエンドサーバーの起動
 
 ```sh
 flask --app app run
 ```
 
-The backend runs at [http://127.0.0.1:5000/](http://127.0.0.1:5000/).
+バックエンドは [http://127.0.0.1:5000/](http://127.0.0.1:5000/) で動作します。
 
-### 3. Frontend Setup (React)
+### 3. フロントエンドのセットアップ（React）
 
-Open a new terminal and navigate to the frontend directory:
+新しいターミナルを開き、フロントエンドディレクトリへ移動：
 
 ```sh
-cd ..      # Go back to address-book-app root if needed
+cd ..      # 必要に応じて address-book-app ルートに戻る
 cd frontend
 ```
 
-#### a. Install Node.js Dependencies
+#### a. Node.js 依存パッケージのインストール
 
 ```sh
 npm install
 ```
 
-#### b. Start the React Development Server
+#### b. React 開発サーバーの起動
 
 ```sh
 npm start
 ```
 
-The React app opens at [http://localhost:3000/](http://localhost:3000/).
+React アプリは [http://localhost:3000/](http://localhost:3000/) で開きます。
 
-
-- **Homepage (`/`)**: Displays all saved addresses in a table.
-- **Create New Address**: Click the button to go to the creation form (`/create`).
-- **Create Address Page (`/create`)**: Fill out the form and submit. You’ll be redirected to the homepage, and the new address will appear.
-- **Delete Button**: Each address row has a "Delete" button to remove it from the database.
+- **ホームページ（`/`）**: 保存済み住所をテーブルで表示
+- **新規住所作成**: ボタンをクリックして作成フォーム（`/create`）へ
+- **住所作成ページ（`/create`）**: フォーム入力後に送信。ホームページへリダイレクトされ、新しい住所が表示されます。
+- **編集ボタン**: 各住所のテーブル行に「編集」ボタンがあります。クリックすると、その住所の情報が入力済みのフォームに移動し、内容を変更できます。更新が成功するとホームページにリダイレクトされます。
+- **削除ボタン**: 各住所行に「削除」ボタンがあり、データベースから削除できます。
