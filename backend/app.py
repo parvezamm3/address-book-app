@@ -72,9 +72,6 @@ LDAP_CONFIG = {
     'pool_lifetime': int(os.getenv('LDAP_POOL_LIFETIME')),
     'max_retries': int(os.getenv('LDAP_MAX_RETRIES')),
     'retry_delay': int(os.getenv('LDAP_RETRY_DELAY')),
-    'bind_dn': os.getenv('LDAP_BIND_DN'),
-    'bind_password': os.getenv('LDAP_BIND_PASSWORD'),
-    'base_dn': os.getenv('LDAP_BASE_DN'),
 }
 
 
@@ -157,7 +154,6 @@ def login():
         return jsonify({"error": "Username and password are required"}), 400
 
     try:
-        # LDAP_SERVER = 'ldap://fpsv.local.controller'
         # Sanitize username to prevent LDAP injection
         safe_username = escape_filter_chars(username)
         user_dn = f'{safe_username}@{LDAP_CONFIG["domain"]}'
@@ -332,83 +328,54 @@ def delete_address(id):
 
 # --- NEW LDAP Info Endpoints ---
 
-def create_ldap_connection():
-    """Create a new LDAP connection."""
-    try:
-        server = Server(
-            LDAP_CONFIG['server'],
-            port=LDAP_CONFIG['port'],
-            use_ssl=LDAP_CONFIG['use_ssl'],
-            get_info=ALL,
-            connect_timeout=LDAP_CONFIG['timeout']
-        )
-        
-        # Format the user DN correctly for AD
-        user_dn = f"{LDAP_CONFIG['bind_dn']}@{LDAP_CONFIG['domain']}"
-        
-        conn = Connection(
-            server,
-            user=user_dn,
-            password=LDAP_CONFIG['bind_password'],
-            authentication=SIMPLE,
-            client_strategy=SAFE_SYNC,
-            read_only=True,
-            lazy=False,
-            raise_exceptions=True,
-            receive_timeout=LDAP_CONFIG['timeout']
-        )
-        
-        # Try to connect and bind
-        if not conn.bind():
-            return None, f"Failed to bind to LDAP server: {conn.result['description']}"
-            
-        return conn, None
-    except Exception as e:
-        return None, str(e)
+# @app.route('/api/ldap/users', methods=['GET'])
+# @login_required
+# def get_ldap_users():
+#     """Fetches a list of users from the LDAP server."""
+#     server, conn, error_message = get_ldap_connection(DEMO_AD_USERNAME, DEMO_AD_PASSWORD)
 
-@app.route('/api/ldap/users', methods=['GET'])
-@login_required
-def get_ldap_users():
-    """Fetches a list of users from the LDAP server."""
-    global LDAP_CONNECTION
-    try:
-        if not LDAP_CONNECTION or not is_connection_valid(LDAP_CONNECTION):
-            conn, error = create_ldap_connection()
-            if not conn:
-                return jsonify({"error": f"Failed to connect to LDAP: {error}"}), 500
-            LDAP_CONNECTION = conn
+#     if not conn:
+#         print(f"Failed to establish LDAP connection for /api/ldap/users: {error_message}")
+#         return jsonify({"error": f"Failed to connect to LDAP for user search: {error_message}"}), 500
+#     try:
+#         SEARCH_BASE = 'CN=Users,DC=fpsv,DC=local'
+#         search_filter = '(&(objectClass=user)(objectCategory=person))'
+#         attributes = ['sAMAccountName', 'cn', 'mail', 'displayName', 'description', 'userPrincipalName']
+#         print(f"Performing LDAP search with base_dn='{LDAP_CONFIG['base_dn']}', filter='{search_filter}'")
+#         conn.search(
+#             search_base=SEARCH_BASE,
+#             search_filter=search_filter,
+#             search_scope=SUBTREE,
+#             attributes=attributes,
+#             size_limit=0
+#         )
 
-        # Search for user objects in AD
-        search_filter = '(&(objectClass=user)(objectCategory=person))'
-        attributes = ['sAMAccountName', 'cn', 'mail', 'displayName', 'description']
+#         users_data = []
+#         if conn.entries:
+#             print(f"Found {len(conn.entries)} LDAP entries.")
+#             for entry in conn.entries:
+#                 user_info = {
+#                     'sAMAccountName': str(entry.sAMAccountName.value) if 'sAMAccountName' in entry else None,
+#                     'cn': str(entry.cn.value) if 'cn' in entry else None,
+#                     'mail': str(entry.mail.value) if 'mail' in entry else None,
+#                     'displayName': str(entry.displayName.value) if 'displayName' in entry else None,
+#                     'description': str(entry.description.value) if 'description' in entry else None,
+#                     'userPrincipalName': str(entry.userPrincipalName.value) if 'userPrincipalName' in entry else None,
+#                     'dn': str(entry.entry_dn)
+#                 }
+#                 users_data.append(user_info)
+#         else:
+#             print(f"No LDAP entries found for filter '{search_filter}' at base '{LDAP_CONFIG['base_dn']}'.")
 
-        LDAP_CONNECTION.search(
-            search_base=LDAP_CONFIG['base_dn'],
-            search_filter=search_filter,
-            search_scope=SUBTREE,
-            attributes=attributes
-        )
+#         conn.unbind()
+#         return jsonify(users_data), 200
 
-        users_data = []
-        for entry in LDAP_CONNECTION.entries:
-            user_info = {
-                'sAMAccountName': entry.sAMAccountName.value if 'sAMAccountName' in entry else None,
-                'cn': entry.cn.value if 'cn' in entry else None,
-                'mail': entry.mail.value if 'mail' in entry else None,
-                'displayName': entry.displayName.value if 'displayName' in entry else None,
-                'description': entry.description.value if 'description' in entry else None,
-                'dn': entry.entry_dn
-            }
-            users_data.append(user_info)
-
-        return jsonify(users_data), 200
-
-    except LDAPException as e:
-        print(f"LDAP search error: {e}")
-        return jsonify({"error": f"LDAP search failed: {e}"}), 500
-    except Exception as e:
-        print(f"Unexpected error during LDAP search: {e}")
-        return jsonify({"error": f"An unexpected error occurred during LDAP search: {e}"}), 500
+#     except LDAPException as e:
+#         print(f"LDAP search error for /api/ldap/users: {e}")
+#         return jsonify({"error": f"LDAP search failed: {e}"}), 500
+#     except Exception as e:
+#         print(f"Unexpected error during LDAP search for /api/ldap/users: {e}")
+#         return jsonify({"error": f"An unexpected error occurred during LDAP search: {e}"}), 500
 
 # @app.route('/api/ldap/users/count', methods=['GET'])
 # @login_required
