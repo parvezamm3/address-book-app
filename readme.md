@@ -57,6 +57,22 @@ pip install -r requirements.txt
 
 `requirements.txt` に `Flask` と `Flask-CORS` が含まれていることを確認してください。
 
+###.env ファイルを作成する
+以下のフォーマットに従って .env ファイルを作成します
+```file
+SECRET_KEY='SECRET_KEY'
+LDAP_SERVER='LDAP_IP_ADDRESSS'
+LDAP_PORT="LDAP_PORT"
+LDAP_USE_SSL=False
+LDAP_DOMAIN="LDAP_DOMAIN"
+LDAP_TIMEOUT=5
+LDAP_POOL_SIZE=10
+LDAP_MAX_RETRIES=3
+LDAP_RETRY_DELAY=1
+LDAP_POOL_LIFETIME=300
+```
+
+
 #### c. データベースの初期化
 
 ```sh

@@ -1,6 +1,7 @@
 // frontend/src/pages/CreateAddressPage.js
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom'; // Import useNavigate for redirection
+import { useAuth } from '../AuthContext'; // To potentially show user info or logout
 
 function CreateAddressPage() {
   const navigate = useNavigate(); // Hook for navigation
@@ -15,6 +16,8 @@ function CreateAddressPage() {
     email: ''
   });
   const [message, setMessage] = useState(''); // For success/error messages
+  const [isError, setIsError] = useState(false);
+  const { logout } = useAuth(); // Get logout function
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,6 +30,7 @@ function CreateAddressPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage(''); // Clear previous messages
+    setIsError(false);
 
     try {
       const response = await fetch('/api/addresses', {
@@ -34,12 +38,17 @@ function CreateAddressPage() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
+        credentials: 'include' // Send cookies
       });
 
       const result = await response.json();
 
       if (!response.ok) {
+        if (response.status === 401) {
+          throw new Error("Unauthorized. Please log in again.");
+      }
+      setIsError(true);
         throw new Error(result.error || `HTTP error! status: ${response.status}`);
       }
 
@@ -63,7 +72,18 @@ function CreateAddressPage() {
 
     } catch (error) {
       console.error("Error adding address:", error);
+      setIsError(true);
       setMessage("Failed to add address: " + error.message);
+    }
+  };
+
+  const handleLogout = async () => {
+    setMessage('');
+    const result = await logout();
+    if (result.success) {
+      setMessage("You have been logged out.");
+    } else {
+      setMessage("Logout failed: " + result.error);
     }
   };
 

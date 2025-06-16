@@ -56,7 +56,20 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-Ensure `requirements.txt` includes `Flask` and `Flask-CORS`.
+### Create .env file
+Create .env file by following this format
+```file
+SECRET_KEY='SECRET_KEY'
+LDAP_SERVER='LDAP_IP_ADDRESSS'
+LDAP_PORT="LDAP_PORT"
+LDAP_USE_SSL=False
+LDAP_DOMAIN="LDAP_DOMAIN"
+LDAP_TIMEOUT=5
+LDAP_POOL_SIZE=10
+LDAP_MAX_RETRIES=3
+LDAP_RETRY_DELAY=1
+LDAP_POOL_LIFETIME=300
+```
 
 #### c. Initialize the Database
 

@@ -1,6 +1,7 @@
 // frontend/src/pages/EditAddressPage.js
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom'; // Import useParams for ID
+import { useAuth } from '../AuthContext';
 
 function EditAddressPage() {
   const { id } = useParams(); // Get the ID from the URL (e.g., /edit/123 -> id = 123)
@@ -19,6 +20,7 @@ function EditAddressPage() {
   const [isError, setIsError] = useState(false);
   const [loading, setLoading] = useState(true); // Loading state for fetching data
   const [error, setError] = useState(null); // Error state for fetching data
+  const { logout } = useAuth(); // Get logout function
 
   // Effect to fetch existing address data when component mounts or ID changes
   useEffect(() => {
@@ -26,8 +28,11 @@ function EditAddressPage() {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch(`/api/addresses/${id}`);
+        const response = await fetch(`/api/addresses/${id}`, { credentials: 'include' });
         if (!response.ok) {
+          if (response.status === 401) {
+            throw new Error("Unauthorized. Please log in.");
+          }
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
@@ -70,6 +75,9 @@ function EditAddressPage() {
       const result = await response.json();
 
       if (!response.ok) {
+        if (response.status === 401) {
+          throw new Error("Unauthorized. Please log in again.");
+      }
         setIsError(true);
         throw new Error(result.error || `HTTP error! status: ${response.status}`);
       }
@@ -84,6 +92,16 @@ function EditAddressPage() {
       console.error("Error updating address:", err);
       setIsError(true);
       setMessage("Failed to update address: " + err.message);
+    }
+  };
+
+  const handleLogout = async () => {
+    setMessage('');
+    const result = await logout();
+    if (result.success) {
+      setMessage("You have been logged out.");
+    } else {
+      setMessage("Logout failed: " + result.error);
     }
   };
 
@@ -111,6 +129,7 @@ function EditAddressPage() {
       <h1>Edit Address (ID: {id})</h1>
       <nav>
         <Link to="/" className="nav-button">Back to Homepage</Link>
+        <button onClick={handleLogout} className="nav-button logout-button">Logout</button>
       </nav>
 
       <form onSubmit={handleSubmit}>
