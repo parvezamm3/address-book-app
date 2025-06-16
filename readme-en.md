@@ -56,7 +56,7 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-### Create .env file
+#### Create .env file
 Create .env file by following this format
 ```file
 SECRET_KEY='SECRET_KEY'
