@@ -61,7 +61,7 @@ pip install -r requirements.txt
 以下のフォーマットに従って .env ファイルを作成します
 ```file
 SECRET_KEY='SECRET_KEY'
-LDAP_SERVER='LDAP_IP_ADDRESSS'
+LDAP_SERVER='ldap://LDAP_IP_ADDRESSS'
 LDAP_PORT="LDAP_PORT"
 LDAP_USE_SSL=False
 LDAP_DOMAIN="LDAP_DOMAIN"

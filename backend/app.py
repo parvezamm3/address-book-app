@@ -85,7 +85,7 @@ LDAP_CONFIG = {
 #         user_dn = f'{safe_username}@{LDAP_CONFIG["domain"]}'
 #         password_for_bind = password
 #         print(username, password)
-#         LDAP_SERVER = 'ldap://fppdci.fpsv.local'
+#         LDAP_SERVER = os.getenv('LDAP_SERVER')
 #         server_obj =  Server(
 #             LDAP_SERVER,
 #             port=LDAP_CONFIG['port'],
